@@ -12,6 +12,7 @@
 //  It will ask the user to input the current time, in military time.
 //  Then it will ask the user to input the dinner time, in military time.
 //  Then it will calculate the amount of time remaining until dinner.
+//  It will do this by converting the times to a number of minutes, then subtract the two times and convert it back to xx hours xx minutes
 //
 //  Here we import the Scanner so we can accept keyboard input:
 import java.util.Scanner;
@@ -24,7 +25,7 @@ public static void main(String[] args) {
 
 
 //Here we declare the necessary variables and the scanner:
-int currentTime, dinnerTime, timeremaining, hours, minutes;
+int currentTime, dinnerTime, timeRemaining, dHours, dMinutes, dBoth, cHours, cMinutes, cBoth, hoursLeft, minutesLeft;       //Note: d corresponds to dinner and c corresponds to current
 Scanner time = new Scanner(System.in);
 
 
@@ -38,24 +39,23 @@ System.out.println("Great, now enter the dinner time in military time:");
 
 
 //Here we calculate the difference in time:
-timeremaining=dinnerTime-currentTime;
-hours=timeremaining/100;
-minutes=timeremaining-(100*hours);
+
+dHours=dinnerTime/100;              //Because the numbers are integers, this returns just the first two numbers, which correspond to hours in the HHMM format.
+dMinutes=dinnerTime-dHours*100;     //This removes the hours that we already established to return just the last two numbers, which correspond to minutes.
+dBoth=(dHours*60)+dMinutes;         //This converts the the number of hours to minutes and sums it with the number of minutes from before.
+
+cHours=currentTime/100;             //This block of three lines does the same as above, but with the current time rather than the dinner time
+cMinutes=currentTime-cHours*100;
+cBoth=(cHours*60)+cMinutes;
 
 
-
-//This while loop improves the user experience by insuring that the minutes value
-//will not be greater than 60.  It simplifies the time remaining.
-while (minutes>60){
-    hours++;
-    minutes=minutes-60;
-}
-
-
+timeRemaining=dBoth-cBoth;          //This returns the number of minutes remaining before dinner
+hoursLeft=timeRemaining/60;         //This returns the number of whole hours that number of minutes corresponds to.
+minutesLeft=timeRemaining%60;       //This returns the remainder from the previous division, which is the number of minutes.
 
 //Here we output the time remaining:
-System.out.println("You have "+hours+" hours and "+minutes+" minutes until dinner.");
+System.out.println("You have "+hoursLeft+" hours and "+minutesLeft+" minutes until dinner.");
     
-    
+
 }
 }
