@@ -14,7 +14,7 @@ public class Average
         Scanner myScanner = new Scanner(System.in);
         System.out.println("How many elements would you like your array to have?");
         n = myScanner.nextInt();
-        int[] myArray = new int[n];
+        int myArray[] = new int[n];
         
         
         
